@@ -89,12 +89,32 @@ def menu(data_table):
     print("Select a data series:")
     choice = get_user_choice(series_titles)
     series = data_table[choice]
-    print(f"Mean: {mean(data_table[choice])}")
-    print(f"Variance: {variance(data_table[choice])}")
-    print(f'Standard Deviation: {standard_deviation(data_table[choice])}')
-    print(f'Range: {data_range(data_table[choice])}')
-    print(f'Interquartile range: {interquartile_range(data_table[choice])}')
+
+    # Prompt the user to select a calculation to perform (mean, variance, standard deviation, range, interquartile range)
+    print("Select a calculation to perform:")
+    calculation = get_user_choice(["Mean", "Variance", "Standard Deviation", "Range", "Interquartile Range", "All statistics"])
     
+    # Prompt the user for a date range
+    start_date_str = input("Enter the start date (YYYY-MM-DD) or press Enter to skip: ")
+    end_date_str = input("Enter the end date (YYYY-MM-DD) or press Enter to skip: ")
+
+    # Print the statistics for the selected series & calculation within the specified date range
+    if calculation == "Mean":
+        print(f"Mean: {mean(data_table[choice])}")
+    elif calculation == "Variance":
+        print(f"Variance: {variance(data_table[choice])}")
+    elif calculation == "Standard Deviation":
+        print(f'Standard Deviation: {standard_deviation(data_table[choice])}')
+    elif calculation == "Range":
+        print(f'Range: {data_range(data_table[choice])}')
+    elif calculation == "Interquartile Range":
+        print(f'Interquartile range: {interquartile_range(data_table[choice])}')
+    elif calculation == "All statistics":
+        print(f"Mean: {mean(data_table[choice])}")
+        print(f"Variance: {variance(data_table[choice])}")
+        print(f'Standard Deviation: {standard_deviation(data_table[choice])}')
+        print(f'Range: {data_range(data_table[choice])}')
+        print(f'Interquartile range: {interquartile_range(data_table[choice])}')
 
 if __name__ == "__main__":
     data = read_csv('weather.csv')
