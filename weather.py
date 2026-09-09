@@ -78,11 +78,7 @@ def read_csv(file,default_value=None):
     return data_table
 
 def add_temperature_range(data_table):
-    # Feature 10 - George
-    # A new data series worked out from the two temperature series.
-    # A day is only given a range when both readings are present.
-    # The title is appended here as well, so the series and its menu entry
-    # always arrive together.
+    # 10 - George
     max_temps = data_table["Maximum temperature (Degree C)"]
     min_temps = data_table["Minimum temperature (Degree C)"]
     temperature_ranges = []
@@ -120,5 +116,6 @@ def menu(data_table):
 
 if __name__ == "__main__":
     data = read_csv('weather.csv')
+    # George- #10
     data = add_temperature_range(data)
     menu(data)
