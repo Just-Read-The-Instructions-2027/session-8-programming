@@ -73,6 +73,20 @@ def read_csv(file,default_value=None):
             [default_value if (len(line[i]) == 0) else conversion(line[i]) for line in lines[1:]]
     return data_table
 
+def add_temperature_range(data_table):
+    # 10 - George
+    max_temps = data_table["Maximum temperature (Degree C)"]
+    min_temps = data_table["Minimum temperature (Degree C)"]
+    temperature_ranges = []
+    for i in range(len(max_temps)):
+        if max_temps[i] is None or min_temps[i] is None:
+            temperature_ranges.append(None)
+        else:
+            temperature_ranges.append(max_temps[i] - min_temps[i])
+    data_table["Temperature range (Degree C)"] = temperature_ranges
+    series_titles.append("Temperature range (Degree C)")
+    return data_table
+
 def get_user_choice(options):
     for i, option in enumerate(options):
         print(f"{i+1}. {option}")
@@ -118,4 +132,6 @@ def menu(data_table):
 
 if __name__ == "__main__":
     data = read_csv('weather.csv')
+    # George- #10
+    data = add_temperature_range(data)
     menu(data)
