@@ -2,14 +2,17 @@ import math
 
 data = list()
 
+data = [1,32,4,5,78,25]
+
 def standard_deviation(data, sample=True):
     if len(data) == 0:
         return None
     
     mean = sum(data) / len(data)
-    
-    # denominator: n-1 for sample, n for population
+
     denom = (len(data) - 1) if sample else len(data)
     
     variance = sum((x - mean)**2 for x in data) / denom
     return math.sqrt(variance)
+
+print(standard_deviation(data))
