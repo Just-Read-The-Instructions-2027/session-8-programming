@@ -17,10 +17,8 @@ def variance(in_series):
     return variance
 
 def standard_deviation(in_series):
-    in_series = list(filter(is_nonnull, in_series))
     v = variance(in_series)
-    std_dev = math.sqrt(v)
-    return std_dev
+    return math.sqrt(v)
 
 def clean(in_series):
     # Days with no reading arrive from read_csv as None.
