@@ -1,3 +1,4 @@
+from datetime import datetime
 
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
 
@@ -18,8 +19,10 @@ def read_csv(file,default_value=None):
     with open(file) as f:
         lines = f.readlines()
     lines = [line.strip().split(',') for line in lines]
-    for i in range(len(lines[0])):
-        data_table[lines[0][i]] = [default_value if (len(line[i]) == 0) else float(line[i]) for line in lines[1:]]
+    for i in range(1,len(lines[0])):
+        conversion = datetime.fromisoformat if (lines[0][i]=='Date') else float
+        data_table[lines[0][i]] = \
+            [default_value if (len(line[i]) == 0) else conversion(line[i]) for line in lines[1:]]
     return data_table
 
 def get_user_choice(options):
