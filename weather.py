@@ -1,4 +1,5 @@
 import math
+from datetime import datetime
 
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
 
