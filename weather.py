@@ -26,7 +26,7 @@ def variance(in_series):
     '''
     
     variance = [
-        ((in_series[x] - mean.(in_series[x])) ** 2)
+        ((in_series[x] - mean(in_series[x])) ** 2)
         for x in in_series
         ]
     
