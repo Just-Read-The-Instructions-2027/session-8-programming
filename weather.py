@@ -59,8 +59,20 @@ def interquartile_range(in_series):
     upper_half = series[len(series) - half:]
     return median(upper_half) - median(lower_half)
 
-def filter_series(year_series, month_series, day_series, data_series, max_date=None, min_date=None):
-    pass
+def filter_series(data, min_date, max_date):
+    dates = data["Date"]
+
+    result = {key: [] for key in data.keys()}
+
+    for i in range(len(dates)):
+        d = dates[i]
+
+        if (min_date is None or d >= min_date) and \
+           (max_date is None or d <= max_date):
+            for key in data.keys():
+                result[key].append(data[key][i])
+
+    return result
 
 def read_csv(file,default_value=None):
     data_table = {}
@@ -109,9 +121,37 @@ def menu(data_table):
     calculation = get_user_choice(["Mean", "Variance", "Standard Deviation", "Range", "Interquartile Range", "All statistics"])
     
     # Prompt the user for a date range
-    start_date_str = input("Enter the start date (YYYY-MM-DD) or press Enter to skip: ")
-    end_date_str = input("Enter the end date (YYYY-MM-DD) or press Enter to skip: ")
+    start_date_str = input("Enter the start date (YYYY-MM-DD) or press Enter to skip: ").strip()
+    end_date_str = input("Enter the end date (YYYY-MM-DD) or press Enter to skip: ").strip()
 
+    # Convert dates
+    min_date = datetime.fromisoformat(start_date_str) if start_date_str else None
+    max_date = datetime.fromisoformat(end_date_str) if end_date_str else None
+
+    # Apply your filter_series function
+    filtered = filter_series(data_table, min_date, max_date)
+
+    #Use the filtered series
+    series = filtered[choice]
+        # Now compute stats on the filtered data
+    if calculation == "Mean":
+        print(f"Mean: {mean(series)}")
+    elif calculation == "Variance":
+        print(f"Variance: {variance(series)}")
+    elif calculation == "Standard Deviation":
+        print(f"Standard Deviation: {standard_deviation(series)}")
+    elif calculation == "Range":
+        print(f"Range: {data_range(series)}")
+    elif calculation == "Interquartile Range":
+        print(f"Interquartile range: {interquartile_range(series)}")
+    elif calculation == "All statistics":
+        print(f"Mean: {mean(series)}")
+        print(f"Variance: {variance(series)}")
+        print(f"Standard Deviation: {standard_deviation(series)}")
+        print(f"Range: {data_range(series)}")
+        print(f"Interquartile range: {interquartile_range(series)}")
+
+"""
     # Print the statistics for the selected series & calculation within the specified date range
     if calculation == "Mean":
         print(f"Mean: {mean(data_table[choice])}")
@@ -129,7 +169,7 @@ def menu(data_table):
         print(f'Standard Deviation: {standard_deviation(data_table[choice])}')
         print(f'Range: {data_range(data_table[choice])}')
         print(f'Interquartile range: {interquartile_range(data_table[choice])}')
-
+"""
 if __name__ == "__main__":
     data = read_csv('weather.csv')
     # George- #10
