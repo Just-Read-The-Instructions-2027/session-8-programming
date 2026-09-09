@@ -5,7 +5,27 @@ def mean(in_series):
     pass
 
 def variance(in_series):
-    pass
+    '''
+    function takes in_series list and returns variance list
+    
+
+    Parameters
+    ----------
+    in_series : list
+
+    Returns
+    -------
+    variance : list
+
+    '''
+    
+    variance = [
+        ((in_series[x] - mean.(in_series[x])) ** 2)
+        for x in in_series
+        ]
+    
+    return variance
+
 
 def standard_deviation(in_series):
     pass
