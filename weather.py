@@ -1,15 +1,40 @@
-from datetime import datetime
+import math
+from datetime import datetime
 
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
 
+def is_nonnull(x):
+    return x is not None
+
 def mean(in_series):
-    pass
+    in_series = list(filter(is_nonnull, in_series))
+    return sum(in_series) / len(in_series)
 
 def variance(in_series):
-    pass
+    '''
+    function takes in_series list and returns variance list
+    
 
-def standard_deviation(in_series):
-    pass
+    Parameters
+    ----------
+    in_series : list
+
+    Returns
+    -------
+    variance : list
+
+    '''
+    
+    variance = [
+        ((in_series[x] - mean.(in_series[x])) ** 2)
+        for x in in_series
+        ]
+    
+    return variance
+
+
+def standard_deviation(variance):
+    return math.sqrt(variance)
 
 def clean(in_series):
     # Days with no reading arrive from read_csv as None.
