@@ -1,4 +1,4 @@
-from datetime import datetime
+import math
 
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
 
@@ -32,8 +32,8 @@ def variance(in_series):
     return variance
 
 
-def standard_deviation(in_series):
-    pass
+def standard_deviation(variance):
+    return math.sqrt(variance)
 
 def filter_series(year_series, month_series, day_series, data_series, max_date=None, min_date=None):
     pass
