@@ -2,8 +2,12 @@ import math
 
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
 
+def is_nonnull(x):
+    return x is not None
+
 def mean(in_series):
-    pass
+    in_series = list(filter(is_nonnull, in_series))
+    return sum(in_series) / len(in_series)
 
 def variance(in_series):
     pass
@@ -20,7 +24,9 @@ def read_csv(file,default_value=None):
         lines = f.readlines()
     lines = [line.strip().split(',') for line in lines]
     for i in range(len(lines[0])):
-        data_table[lines[0][i]] = [default_value if (len(line[i]) == 0) else float(line[i]) for line in lines[1:]]
+        conversion = datetime.fromisoformat if (lines[0][i] == 'Date') else float
+        data_table[lines[0][i]] = \
+            [default_value if (len(line[i]) == 0) else conversion(line[i]) for line in lines[1:]]
     return data_table
 
 def get_user_choice(options):
