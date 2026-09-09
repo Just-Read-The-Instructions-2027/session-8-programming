@@ -11,27 +11,9 @@ def mean(in_series):
     return sum(in_series) / len(in_series)
 
 def variance(in_series):
-    '''
-    function takes in_series list and returns variance list
-    
-
-    Parameters
-    ----------
-    in_series : list
-
-    Returns
-    -------
-    variance : list
-
-    '''
-    
-    variance = [
-        ((in_series[x] - mean(in_series[x])) ** 2)
-        for x in in_series
-        ]
-    
-    return variance
-
+    in_series = list(filter(is_nonnull, in_series))
+    m = mean(in_series)
+    return sum((x-m) ** 2 for x in in_series) / len(in_series)
 
 def standard_deviation(variance):
     return math.sqrt(variance)
@@ -108,6 +90,11 @@ def menu(data_table):
     choice = get_user_choice(series_titles)
     series = data_table[choice]
     print(f"Mean: {mean(data_table[choice])}")
+    print(variance)
+    print(f'Standard Deviation: {standard_deviation(data_table[choice])}')
+    print(f'Range: {data_range(data_table[choice])}')
+    print(f'Interquartile range: {interquartile_range(data_table[choice])}')
+    
 
 if __name__ == "__main__":
     data = read_csv('weather.csv')
