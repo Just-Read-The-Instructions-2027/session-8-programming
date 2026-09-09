@@ -3,23 +3,6 @@ from datetime import datetime
 
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
 
-def is_nonnull(x):
-    return x is not None
-
-def mean(in_series):
-    in_series = list(filter(is_nonnull, in_series))
-    return sum(in_series) / len(in_series)
-
-def variance(in_series):
-    in_series = list(filter(is_nonnull, in_series))
-    m = mean(in_series)
-    variance = sum((x - m) ** 2 for x in in_series) / len(in_series)
-    return variance
-
-def standard_deviation(in_series):
-    v = variance(in_series)
-    return math.sqrt(v)
-
 def clean(in_series):
     # Days with no reading arrive from read_csv as None.
     # Build a new list holding only the real readings.
@@ -28,6 +11,21 @@ def clean(in_series):
         if value is not None:
             result.append(value)
     return result
+
+def mean(in_series):
+    #takes input and returns mean
+    in_series = clean(in_series)
+    return sum(in_series) / len(in_series)
+
+def variance(in_series):
+    in_series = clean(in_series)
+    m = mean(in_series)
+    variance = sum((x - m) ** 2 for x in in_series) / len(in_series)
+    return variance
+
+def standard_deviation(in_series):
+    v = variance(in_series)
+    return math.sqrt(v)
 
 def data_range(in_series):
     # Feature 4: the largest value minus the smallest value.
