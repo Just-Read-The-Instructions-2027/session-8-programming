@@ -13,10 +13,14 @@ def mean(in_series):
 def variance(in_series):
     in_series = list(filter(is_nonnull, in_series))
     m = mean(in_series)
-    return sum((x-m) ** 2 for x in in_series) / len(in_series)
+    variance = sum((x - m) ** 2 for x in in_series) / len(in_series)
+    return variance
 
-def standard_deviation(variance):
-    return math.sqrt(variance)
+def standard_deviation(in_series):
+    in_series = list(filter(is_nonnull, in_series))
+    v = variance(in_series)
+    std_dev = math.sqrt(v)
+    return std_dev
 
 def clean(in_series):
     # Days with no reading arrive from read_csv as None.
@@ -90,7 +94,7 @@ def menu(data_table):
     choice = get_user_choice(series_titles)
     series = data_table[choice]
     print(f"Mean: {mean(data_table[choice])}")
-    print(variance)
+    print(f"Variance: {variance(data_table[choice])}")
     print(f'Standard Deviation: {standard_deviation(data_table[choice])}')
     print(f'Range: {data_range(data_table[choice])}')
     print(f'Interquartile range: {interquartile_range(data_table[choice])}')
