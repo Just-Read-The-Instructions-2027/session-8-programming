@@ -36,6 +36,47 @@ def variance(in_series):
 def standard_deviation(variance):
     return math.sqrt(variance)
 
+def clean(in_series):
+    # Days with no reading arrive from read_csv as None.
+    # Build a new list holding only the real readings.
+    result = []
+    for value in in_series:
+        if value is not None:
+            result.append(value)
+    return result
+
+def data_range(in_series):
+    # Feature 4: the largest value minus the smallest value.
+    # Called data_range so it does not hide Python's built-in range().
+    series = clean(in_series)
+    if len(series) == 0:
+        return None
+    return max(series) - min(series)
+
+def median(in_series):
+    # The middle value once the series is sorted.
+    # With an even number of values, take the average of the middle two.
+    series = clean(in_series)
+    if len(series) == 0:
+        return None
+    series.sort()
+    middle = int(len(series) / 2)
+    if len(series) % 2 == 1:
+        return series[middle]
+    return (series[middle - 1] + series[middle]) / 2
+
+def interquartile_range(in_series):
+    # Feature 5: IQR = Q3 - Q1, the range of the middle 50% of the values.
+    # Q1 is the median of the lower half, Q3 is the median of the upper half.
+    series = clean(in_series)
+    if len(series) < 4:
+        return None
+    series.sort()
+    half = int(len(series) / 2)
+    lower_half = series[:half]
+    upper_half = series[len(series) - half:]
+    return median(upper_half) - median(lower_half)
+
 def filter_series(year_series, month_series, day_series, data_series, max_date=None, min_date=None):
     pass
 
@@ -44,8 +85,8 @@ def read_csv(file,default_value=None):
     with open(file) as f:
         lines = f.readlines()
     lines = [line.strip().split(',') for line in lines]
-    for i in range(len(lines[0])):
-        conversion = datetime.fromisoformat if (lines[0][i] == 'Date') else float
+    for i in range(1,len(lines[0])):
+        conversion = datetime.fromisoformat if (lines[0][i]=='Date') else float
         data_table[lines[0][i]] = \
             [default_value if (len(line[i]) == 0) else conversion(line[i]) for line in lines[1:]]
     return data_table
